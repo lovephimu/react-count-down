@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@jest/globals": "^29.5.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@upleveled/react-scripts": "5.0.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sass": "^1.62.1",
+    "sharp": "^0.32.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "@jest/globals": "^29.5.0",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
     "eslint-config-upleveled": "^4.2.0",
