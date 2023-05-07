@@ -22,8 +22,12 @@ export default function Countdown() {
         <label htmlFor="endDate" className={styles.placeHolderBox}>
           End date
         </label>
-        <input id="startDate" value="" />
-        <input id="endDate" value="" />
+        <input
+          id="startDate"
+          placeholder={`${currentDay}-${currentMonth}-${currentYear}`}
+          value=""
+        />
+        <input id="endDate" placeholder="DD-MM-YYYY" value="" />
       </div>
       <div className={styles.countDown}>00:00:00:00</div>
       <button className={styles.extraButton}>START</button>

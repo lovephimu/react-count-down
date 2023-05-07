@@ -90,13 +90,17 @@ input {
   background: none;
   border: 1px dotted $borderColor;
   border-radius: 2px;
-  color: #cecece;
+  color: $fontColorHighLight;
   font-size: 1em;
   padding: 0.5em;
   flex-grow: 1;
   box-sizing: border-box;
   outline: none; /* remove the default focus outline or maybe not*/
   flex-wrap: wrap;
+}
+
+input::placeholder {
+  color: $fontColorGeneral;
 }
 
 .structureBox input:first-of-type {
