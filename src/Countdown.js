@@ -16,7 +16,6 @@ export default function Countdown() {
   const [numHours, setNumHours] = useState('00');
   const [numMinutes, setNumMinutes] = useState('00');
   const [numSeconds, setNumSeconds] = useState('00');
-  const [fontColor, setFontColor] = useState(true);
 
   function decreaseTime() {
     // check to see whether start date has been set
