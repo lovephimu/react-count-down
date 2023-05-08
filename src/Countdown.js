@@ -39,7 +39,27 @@ export default function Countdown() {
     setNumSeconds(seconds);
   }
 
-  function decreaseTime() {}
+  function decreaseTime() {
+    // states rewrite so they can be used by new Date
+    const startDateArray = startDate.split('-').reverse();
+    const endDateArray = endDate.split('-').reverse();
+
+    let timeDifference =
+      new Date(...endDateArray) - new Date(...startDateArray);
+
+    setInterval(() => {
+      timeDifference -= 1000;
+      days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+      minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+      seconds = Math.floor((timeDifference / 1000) % 60);
+      // translate to dates through states
+      setNumDays(days);
+      setNumHours(hours);
+      setNumMinutes(minutes);
+      setNumSeconds(seconds);
+    }, 1000);
+  }
 
   return (
     <section>
@@ -73,7 +93,7 @@ export default function Countdown() {
       <div className={styles.countDown}>
         {numDays}:{numHours}:{numMinutes}:{numSeconds}
       </div>
-      <button className={styles.extraButton} onClick={() => measureTime()}>
+      <button className={styles.extraButton} onClick={() => decreaseTime()}>
         START
       </button>
     </section>
