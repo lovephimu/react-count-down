@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
 export default function Countdown() {
@@ -7,7 +7,6 @@ export default function Countdown() {
   const currentDay = String(date.getDate()).padStart(2, '0');
   const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
   const currentYear = date.getFullYear();
-  const testDate = new Date('2023', 10, 20);
 
   let [days, hours, minutes, seconds] = [0, 0, 0, 0];
 
@@ -17,29 +16,11 @@ export default function Countdown() {
   const [numHours, setNumHours] = useState('00');
   const [numMinutes, setNumMinutes] = useState('00');
   const [numSeconds, setNumSeconds] = useState('00');
-
-  function measureTime() {
-    // states rewrite so they can be used by new Date
-    const startDateArray = startDate.split('-').reverse();
-    const endDateArray = endDate.split('-').reverse();
-
-    // end date - startdate
-    const timeDifference =
-      new Date(...endDateArray) - new Date(...startDateArray);
-
-    // translate into days, hours, minutes, seconds
-    days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-    minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-    seconds = Math.floor((timeDifference / 1000) % 60);
-    // translate to dates through states
-    setNumDays(days);
-    setNumHours(hours);
-    setNumMinutes(minutes);
-    setNumSeconds(seconds);
-  }
+  const [fontColor, setFontColor] = useState(true);
 
   function decreaseTime() {
+    // check to see whether start date has been set
+
     // states rewrite so they can be used by new Date
     const startDateArray = startDate.split('-').reverse();
     const endDateArray = endDate.split('-').reverse();
@@ -65,11 +46,12 @@ export default function Countdown() {
     <section>
       <h1 className={styles.title}>Countdown Timer</h1>
 
-      <h2>
-        Today is the {currentDay}-{currentMonth}-{currentYear} let's also test
-        some stuff:
-        {testDate.getTime() - date.getTime()}
-      </h2>
+      <div className={styles.structurePanel}>
+        This countdown timer shows the remaining time between two dates! <br />
+        You only have to enter two dates according to the pattern DD-MM-YYYY.
+        You can choose two dates or leave the start date blank and start
+        counting from today.
+      </div>
       <div className={styles.structureBox}>
         <label htmlFor="startDate" className={styles.placeHolderBox}>
           Start date
@@ -90,12 +72,53 @@ export default function Countdown() {
           onChange={(event) => setEndDate(event.currentTarget.value)}
         />
       </div>
-      <div className={styles.countDown}>
-        {numDays}:{numHours}:{numMinutes}:{numSeconds}
+      <div className={styles.gridContainer}>
+        <span className={styles.countDown}>{numDays}</span>
+        <span className={styles.countDown}>:</span>
+        <span className={styles.countDown}>{numHours}</span>
+        <span className={styles.countDown}>:</span>
+        <span className={styles.countDown}>{numMinutes}</span>
+        <span className={styles.countDown}>:</span>
+        <span className={styles.countDown}>{numSeconds}</span>
+        <span className={styles.gridItem}>Days</span>
+        <span />
+        <span className={styles.gridItem}>Hours</span>
+        <span />
+        <span className={styles.gridItem}>Minutes</span>
+        <span />
+        <span className={styles.gridItem}>Seconds</span>
       </div>
-      <button className={styles.extraButton} onClick={() => decreaseTime()}>
+      <button
+        className={styles.extraButton}
+        onClick={() => {
+          decreaseTime();
+        }}
+      >
         START
       </button>
     </section>
   );
 }
+
+// Archived methodes
+
+// function measureTime() {
+//   // states rewrite so they can be used by new Date
+//   const startDateArray = startDate.split('-').reverse();
+//   const endDateArray = endDate.split('-').reverse();
+
+//   // end date - startdate
+//   const timeDifference =
+//     new Date(...endDateArray) - new Date(...startDateArray);
+
+//   // translate into days, hours, minutes, seconds
+//   days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+//   hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+//   minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+//   seconds = Math.floor((timeDifference / 1000) % 60);
+//   // translate to dates through states
+//   setNumDays(days);
+//   setNumHours(hours);
+//   setNumMinutes(minutes);
+//   setNumSeconds(seconds);
+// }
