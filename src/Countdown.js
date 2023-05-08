@@ -7,7 +7,7 @@ export default function Countdown() {
   const currentDay = String(date.getDate()).padStart(2, '0');
   const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
   const currentYear = date.getFullYear();
-  const testDate = new Date(2023, 10, 20);
+  const testDate = new Date('2023', 10, 20);
 
   let [days, hours, minutes, seconds] = [0, 0, 0, 0];
 
@@ -19,9 +19,14 @@ export default function Countdown() {
   const [numSeconds, setNumSeconds] = useState('00');
 
   function measureTime() {
-    // stats rewrite
+    // states rewrite so they can be used by new Date
+    const startDateArray = startDate.split('-').reverse();
+    const endDateArray = endDate.split('-').reverse();
+
     // end date - startdate
-    const timeDifference = endDate.getTime() - startDate.getTime();
+    const timeDifference =
+      new Date(...endDateArray) - new Date(...startDateArray);
+
     // translate into days, hours, minutes, seconds
     days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
@@ -34,9 +39,7 @@ export default function Countdown() {
     setNumSeconds(seconds);
   }
 
-  function transferDates() {
-    const tempStartDate = startDate.split('');
-  }
+  function decreaseTime() {}
 
   return (
     <section>
