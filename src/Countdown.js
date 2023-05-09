@@ -7,6 +7,12 @@ export default function Countdown() {
   const currentDay = String(date.getDate()).padStart(2, '0');
   const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
   const currentYear = date.getFullYear();
+  const currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
+  const endOfTheYear = new Date(2023, 11, 31);
+  const currentDayEnd = String(endOfTheYear.getDate()).padStart(2, '0');
+  const currentMonthEnd = String(endOfTheYear.getMonth() + 1).padStart(2, '0');
+  const currentYearEnd = endOfTheYear.getFullYear();
+  const currentDateEnd = `${currentDayEnd}-${currentMonthEnd}-${currentYearEnd}`;
 
   let [days, hours, minutes, seconds] = [0, 0, 0, 0];
 
@@ -16,18 +22,34 @@ export default function Countdown() {
   const [numHours, setNumHours] = useState('00');
   const [numMinutes, setNumMinutes] = useState('00');
   const [numSeconds, setNumSeconds] = useState('00');
+  const [highLight, setHighLight] = useState('#f18b82');
+
+  function setEmpty() {
+    setNumDays('--');
+    setNumHours('--');
+    setNumMinutes('--');
+    setNumSeconds('--');
+  }
 
   function decreaseTime() {
+    setHighLight('#FFFFFF');
     // check to see whether start date has been set
 
     // states rewrite so they can be used by new Date
     const startDateArray = startDate.split('-').reverse();
     const endDateArray = endDate.split('-').reverse();
+    startDateArray[1] = Number(startDateArray[1]) - 1;
+    endDateArray[1] = Number(endDateArray[1]) - 1;
 
     let timeDifference =
       new Date(...endDateArray) - new Date(...startDateArray);
 
-    setInterval(() => {
+    const intervalID = setInterval(() => {
+      if (timeDifference <= 0) {
+        clearInterval(intervalID);
+        setEmpty();
+        return;
+      }
       timeDifference -= 1000;
       days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
@@ -72,13 +94,27 @@ export default function Countdown() {
         />
       </div>
       <div className={styles.gridContainer}>
-        <span className={styles.countDown}>{numDays}</span>
-        <span className={styles.countDown}>:</span>
-        <span className={styles.countDown}>{numHours}</span>
-        <span className={styles.countDown}>:</span>
-        <span className={styles.countDown}>{numMinutes}</span>
-        <span className={styles.countDown}>:</span>
-        <span className={styles.countDown}>{numSeconds}</span>
+        <span className={styles.countDown} style={{ color: highLight }}>
+          {numDays}
+        </span>
+        <span className={styles.countDown} style={{ color: highLight }}>
+          :
+        </span>
+        <span className={styles.countDown} style={{ color: highLight }}>
+          {numHours}
+        </span>
+        <span className={styles.countDown} style={{ color: highLight }}>
+          :
+        </span>
+        <span className={styles.countDown} style={{ color: highLight }}>
+          {numMinutes}
+        </span>
+        <span className={styles.countDown} style={{ color: highLight }}>
+          :
+        </span>
+        <span className={styles.countDown} style={{ color: highLight }}>
+          {numSeconds}
+        </span>
         <span className={styles.gridItem}>Days</span>
         <span />
         <span className={styles.gridItem}>Hours</span>
@@ -90,34 +126,16 @@ export default function Countdown() {
       <button
         className={styles.extraButton}
         onClick={() => {
-          decreaseTime();
+          !startDate
+            ? setStartDate(currentDate)
+            : !endDate
+            ? setEndDate(currentDateEnd)
+            : decreaseTime();
         }}
       >
-        START
+        {!startDate || !endDate ? 'SET' : 'START'}
       </button>
     </section>
   );
 }
 
-// Archived methodes
-
-// function measureTime() {
-//   // states rewrite so they can be used by new Date
-//   const startDateArray = startDate.split('-').reverse();
-//   const endDateArray = endDate.split('-').reverse();
-
-//   // end date - startdate
-//   const timeDifference =
-//     new Date(...endDateArray) - new Date(...startDateArray);
-
-//   // translate into days, hours, minutes, seconds
-//   days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-//   hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-//   minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-//   seconds = Math.floor((timeDifference / 1000) % 60);
-//   // translate to dates through states
-//   setNumDays(days);
-//   setNumHours(hours);
-//   setNumMinutes(minutes);
-//   setNumSeconds(seconds);
-// }
