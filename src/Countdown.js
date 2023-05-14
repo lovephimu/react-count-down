@@ -23,6 +23,7 @@ export default function Countdown() {
   const [numMinutes, setNumMinutes] = useState('00');
   const [numSeconds, setNumSeconds] = useState('00');
   const [highLight, setHighLight] = useState('#f18b82');
+  const [finished, setFinished] = useState('#19727800');
 
   function setEmpty() {
     setNumDays('--');
@@ -48,6 +49,7 @@ export default function Countdown() {
       if (timeDifference <= 0) {
         clearInterval(intervalID);
         setEmpty();
+        setFinished('#197278');
         return;
       }
       timeDifference -= 1000;
@@ -64,14 +66,13 @@ export default function Countdown() {
   }
 
   return (
-    <section>
+    <section style={{ backgroundColor: finished }}>
       <h1 className={styles.title}>Countdown Timer</h1>
 
       <div className={styles.structurePanel}>
         This countdown timer shows the remaining time between two dates! <br />
         You only have to enter two dates according to the pattern DD-MM-YYYY.
-        You can choose two dates or leave the start date blank and start
-        counting from today.
+        Alternatively, just hit set twice!
       </div>
       <div className={styles.structureBox}>
         <label htmlFor="startDate" className={styles.placeHolderBox}>
@@ -138,4 +139,3 @@ export default function Countdown() {
     </section>
   );
 }
-
