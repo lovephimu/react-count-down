@@ -37,7 +37,8 @@
     "@jest/globals": "^29.5.0",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
-    "eslint-config-upleveled": "^4.2.0",
+    "eslint-config-upleveled": "^4.3.2",
+    "eslint-config-react-app": "./package.json",
     "stylelint": "^15.6.1",
     "stylelint-config-upleveled": "^1.0.2",
     "typescript": "^5.0.4"
